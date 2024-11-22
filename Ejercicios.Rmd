@@ -1,0 +1,323 @@
+---
+title: "TAREA 5 Webwork"
+author: "Citlaly"
+date: "2024-09-28"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Problema 7
+```{r}
+# Parámetros de la distribución
+media <- 24
+desviacion_estandar <- 2.6
+
+# Calcular los percentiles 25 (Q1) y 75 (Q3)
+Q1 <- qnorm(0.25, mean = media, sd = desviacion_estandar)
+Q3 <- qnorm(0.75, mean = media, sd = desviacion_estandar)
+
+# Calcular el rango intercuartílico (IQR)
+IQR <- Q3 - Q1
+
+# Imprimir los resultados
+cat("Percentil 25 (Q1):", Q1, "\n")
+cat("Percentil 75 (Q3):", Q3, "\n")
+cat("Rango Intercuartílico (IQR):", IQR, "\n")
+
+
+```
+# Problema 8
+```{r}
+# Parámetros de la distribución
+media <- 80
+desviacion_estandar <- 15
+
+# Puntajes del examen
+puntaje1 <- 35
+puntaje2 <- 125
+zscore3 <- 2
+zscore4 <- 2.28
+
+# Calcular Z-scores para los puntajes de examen
+z1 <- (puntaje1 - media) / desviacion_estandar
+z2 <- (puntaje2 - media) / desviacion_estandar
+
+# Calcular percentiles a partir de los Z-scores
+percentil1 <- pnorm(z1) * 100
+percentil2 <- pnorm(z2) * 100
+percentil3 <- pnorm(zscore3) * 100
+percentil4 <- pnorm(zscore4) * 100
+
+# Imprimir resultados
+cat("Puntaje 35 - Z-score:", z1, "- Percentil:", percentil1, "%\n")
+cat("Puntaje 125 - Z-score:", z2, "- Percentil:", percentil2, "%\n")
+cat("Z-score 2 - Percentil:", percentil3, "%\n")
+cat("Z-score 2.28 - Percentil:", percentil4, "%\n")
+
+```
+
+# Problema 9
+```{r}
+# Parámetros conocidos
+probabilidad <- 0.5481
+limite_inferior <- -10
+limite_superior <- 11
+
+# Función para encontrar el valor de mu que satisface la probabilidad
+funcion_mu <- function(mu) {
+  z_inferior <- (limite_inferior - mu) / mu
+  z_superior <- (limite_superior - mu) / mu
+  prob_calculada <- pnorm(z_superior) - pnorm(z_inferior)
+  return(abs(prob_calculada - probabilidad))
+}
+
+# Encontrar el valor óptimo de mu que minimiza la diferencia entre probabilidades
+mu_optimo <- optimize(funcion_mu, c(1, 100))$minimum
+
+# Imprimir el resultado
+cat("El valor óptimo de mu es:", mu_optimo, "\n")
+```
+
+```{r}
+
+# Probabilidad acumulada correspondiente al 83% (100% - 17%)
+percentil <- 0.83
+
+# Calcular el valor de X que excede el 17% superior
+x_excede_17 <- qnorm(percentil, mean = media, sd = desviacion_estandar)
+
+# Imprimir el resultado
+cat("Valor de X que excede solo el 17% superior:", x_excede_17, "\n")
+```
+
+# Problema 11
+```{r}
+
+# Parámetros conocidos
+media <- 115
+desviacion_estandar <- 28
+x_valor <- 161.2
+
+# Parte A: Calcular la probabilidad de que X sea mayor que 161.2
+probabilidad_mayor <- 1 - pnorm(x_valor, mean = media, sd = desviacion_estandar)
+cat("Probabilidad de que X sea mayor que 161.2:", probabilidad_mayor, "\n")
+
+# Parte B: Calcular el valor de X que excede el 17% superior
+percentil <- 0.83
+x_excede_17 <- qnorm(percentil, mean = media, sd = desviacion_estandar)
+cat("Valor de X que excede solo el 17% superior:", x_excede_17, "\n")
+```
+
+# Problema 12 
+```{r}
+# Parámetro de la distribución exponencial
+lambda1 <- 1.5
+
+# Calcular las probabilidades acumuladas
+probabilidad_4 <- 1 - exp(-lambda1 * 4)
+probabilidad_2 <- 1 - exp(-lambda1 * 2)
+
+# Probabilidad de que 2 <= X <= 4
+probabilidad_2_a_4 <- probabilidad_4 - probabilidad_2
+
+# Imprimir el resultado
+cat("Probabilidad de que 2 <= X <= 4:", probabilidad_2_a_4, "\n")
+# Parámetro de la distribución exponencial
+lambda2 <- 2
+
+# Calcular la probabilidad de que X >= 1
+probabilidad_ge_1 <- exp(-lambda2 * 1)
+
+# Imprimir el resultado
+cat("Probabilidad de que X >= 1:", probabilidad_ge_1, "\n")
+```
+
+# Problema 15
+```{r}
+# Parámetros conocidos
+media <- 366
+desviacion_estandar <- 80
+x1 <- 206
+x2 <- 366
+
+# Calcular los Z-scores para 206 y 366
+z1 <- (x1 - media) / desviacion_estandar
+z2 <- (x2 - media) / desviacion_estandar
+
+# Calcular las probabilidades acumuladas
+probabilidad_206 <- pnorm(z1)
+probabilidad_366 <- pnorm(z2)
+
+# Probabilidad entre 206 y 366
+probabilidad_entre <- probabilidad_366 - probabilidad_206
+
+# Convertir a porcentaje
+porcentaje <- probabilidad_entre * 100
+
+# Imprimir el resultado
+cat("Porcentaje de estudiantes que puntuaron entre 206 y 366:", round(porcentaje, 3), "percent\n")
+```
+
+# Problema 16
+```{r}
+
+# Parámetros conocidos
+media <- 3.2
+desviacion_estandar <- 0.4
+probabilidad <- 0.99  # Queremos el percentil 99%
+
+# Calcular el valor de L que excede el 1% superior (percentil 99%)
+l_valor <- qnorm(probabilidad, mean = media, sd = desviacion_estandar)
+
+# Imprimir el resultado
+cat("Valor de L tal que P(L > l) = 0.01:", round(l_valor, 2), "cm\n")
+```
+```{r}
+# Parámetros conocidos
+mu <- 77.7
+sigma <- 9.3
+x_valor <- 87.2
+
+# Calcular la probabilidad acumulada de que X <= 87.2
+prob_acumulada <- pnorm(x_valor, mean = mu, sd = sigma)
+
+# Probabilidad de que X > 87.2
+prob_mayor_87_2 <- 1 - prob_acumulada
+
+# Imprimir el resultado
+cat("Probabilidad de que X > 87.2:", round(prob_mayor_87_2, 4), "\n")
+# Calcular el Z-score y la probabilidad acumulada para 63.7
+x_63_7 <- 63.7
+prob_acumulada_63_7 <- pnorm(x_63_7, mean = mu, sd = sigma)
+
+# Probabilidad entre 63.7 y 87.2
+prob_entre_63_7_87_2 <- prob_acumulada - prob_acumulada_63_7
+
+# Imprimir el resultado
+cat("Probabilidad de que 63.7 <= X <= 87.2:", round(prob_entre_63_7_87_2, 4), "\n")
+```
+
+# Problema 19
+```{r}
+
+# Parámetros de la distribución
+mu <- 50    # media
+sigma <- 7  # desviación estándar
+
+# A. Probabilidad de que el coche recorra más de 55 millas por galón
+# P(X > 55) = 1 - P(X <= 55)
+prob_A <- 1 - pnorm(55, mean = mu, sd = sigma)
+cat("A. Probabilidad de que el coche recorra más de 55 millas por galón:", prob_A, "\n")
+
+# B. Probabilidad de que el coche recorra menos de 46 millas por galón
+# P(X < 46) = P(X <= 46)
+prob_B <- pnorm(46, mean = mu, sd = sigma)
+cat("B. Probabilidad de que el coche recorra menos de 46 millas por galón:", prob_B, "\n")
+
+# C. Probabilidad de que el coche recorra entre 47 y 54 millas por galón
+# P(47 <= X <= 54) = P(X <= 54) - P(X <= 47)
+prob_C <- pnorm(54, mean = mu, sd = sigma) - pnorm(47, mean = mu, sd = sigma)
+cat("C. Probabilidad de que el coche recorra entre 47 y 54 millas por galón:", prob_C, "\n")
+```
+
+# Problema 13
+```{r}
+# Parte (a)
+# P(Z <= z0) = 0.736
+z0_a <- qnorm(0.736)
+z0_a
+
+# Parte (b)
+# P(-z0 <= Z <= z0) = 0.9848
+z0_b <- qnorm((1 + 0.9848) / 2)
+z0_b
+
+# Parte (c)
+# P(-z0 <= Z <= z0) = 0.596
+z0_c <- qnorm((1 + 0.596) / 2)
+z0_c
+
+# Parte (d)
+# P(Z >= z0) = 0.4054
+z0_d <- qnorm(1 - 0.4054)
+z0_d
+
+# Parte (e) 
+z0_e <- qnorm(0.5 + 0.4176)
+z0_e
+
+# Parte (f) 
+p_f <- pnorm(-1.86) + 0.6371
+z0_f <- qnorm(p_f)
+z0_f
+
+```
+
+# Problema 14
+
+```{r}
+# Parte (a)
+# P(-0.74 <= Z <= 1.88)
+p_a <- pnorm(1.88) - pnorm(-0.74)
+p_a
+
+# Parte (b)
+# P(-1.72 <= Z <= 1.71)
+p_b <- pnorm(1.71) - pnorm(-1.72)
+p_b
+
+# Parte (c)
+# P(Z <= 0.29)
+p_c <- pnorm(0.29)
+p_c
+
+# Parte (d)
+# P(Z > -0.5) = 1 - P(Z <= -0.5)
+p_d <- 1 - pnorm(-0.5)
+p_d
+```
+
+# Problema 10
+```{r}
+# Parámetros de la distribución normal
+mu <- 31.4    # Media
+sigma <- 0.1  # Desviación estándar
+
+# Valores entre los cuales calcular el área
+x1 <- 31.2
+x2 <- 31.5
+
+# Calcular las probabilidades acumuladas correspondientes a x1 y x2
+p1 <- pnorm(x1, mean = mu, sd = sigma)
+p2 <- pnorm(x2, mean = mu, sd = sigma)
+
+# Calcular el área entre x1 y x2
+area <- p2 - p1
+
+# Mostrar el resultado
+area
+```
+```{r}
+# Parámetros de la distribución normal
+mu <- 31.4    # Media
+sigma <- 0.1  # Desviación estándar
+
+# Valores entre los cuales calcular el área
+x1 <- 31.2
+x2 <- 31.5
+
+# Calcular las probabilidades acumuladas correspondientes a x1 y x2
+z1 <- (x1 - mu) / sigma
+z2 <- (x2 - mu) / sigma
+
+p1 <- pnorm(z1)  # Probabilidad acumulada hasta z1
+p2 <- pnorm(z2)  # Probabilidad acumulada hasta z2
+
+# Calcular el área entre x1 y x2
+area <- p2 - p1
+
+# Mostrar el resultado
+print(paste("El área bajo la curva es:", round(area, 4)))
+```
